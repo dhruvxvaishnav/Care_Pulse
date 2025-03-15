@@ -11,7 +11,7 @@ export default function Home() {
             height={1000}
             width={1000}
             alt="patient"
-            className="mb-12 h-10 w-fit"
+            className="mb-12 h-10 w-fit "
           ></Image>
         </div>
       </section>
