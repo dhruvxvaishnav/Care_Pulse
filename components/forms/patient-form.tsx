@@ -10,6 +10,7 @@ import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
+import { createUser } from "@/lib/actions/patient.actions";
 
 export enum FormFieldTypes {
   INPUT = "input",
@@ -40,13 +41,16 @@ const PatientForm = () => {
   }: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
     try {
-      // const userData = {
-      //   name,
-      //   email,
-      //   phone,
-      // };
-      // const user = await createUser(userData);
-      // if (user) router.push(`/patients/${user.id}/register`);
+      const userData = {
+        name,
+        email,
+        phone,
+      };
+      const user = await createUser(userData);
+      if (user && user.$id) {
+        console.log("Navigation To: ", `/patients/${user.$id}/register`);
+        router.push(`/patients/${user.$id}/register`);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +65,7 @@ const PatientForm = () => {
         </section>
         <CustomFormField
           fieldType={FormFieldTypes.INPUT}
-          name="username"
+          name="name"
           label="Full Name"
           placeholder="Enter Your Full Name"
           iconSrc="/assets/icons/user.svg"
